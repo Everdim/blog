@@ -1,0 +1,16 @@
+################### Таблица msgs ######################
+CREATE TABLE msgs(
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	title TEXT,
+	description TEXT,
+)
+#######################################################
+################### Таблица comments ######################
+CREATE TABLE comments(
+	id INTEGER,
+	name TEXT
+	post INTEGER
+	author TEXT
+	text TEXT
+)
+#######################################################
