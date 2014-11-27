@@ -1,6 +1,18 @@
 <?php
+/**
+ * NewsBD class
+ *
+ * @version 1.0
+ * @author  Dmitry Balandin <dmitry.balandin.1990@gmail.com>
+ */
 require 'INewsDB.class.php';
 
+/**
+ * Interface with major methods
+ *
+ * @version 1.0
+ * @author Dmitry Balandin <dmitry.balandin.1990@gmail.com>
+ */
 class NewsDB implements INewsDB
 {
     protected $_db;
@@ -23,12 +35,23 @@ class NewsDB implements INewsDB
         }
     }
 
+    function createCommentsTable()
+    {
+        $sql = "CREATE TABLE IF NOT EXISTS comments(
+				id INTEGER,
+				news_id INTEGER,
+				author TEXT,
+				text TEXT)";
+        $this->_db->exec($sql) or die($this->_db->lastErrorMsg());
+    }
+
+    //проверка входных данных для save_news.php
+
     function __destruct()
     {
         unset($this->_db);
     }
 
-    //проверка входных данных для save_news.php
     function clearStr($data)
     {
         $data = trim(strip_tags($data));
@@ -40,25 +63,16 @@ class NewsDB implements INewsDB
         return abs((int)$data);
     }
 
+    //Результатом getNews должен быть возврат массива, поэтому создаем метод "перегоняющий ДБ в массив"
+
     function saveNews($title, $description)
     {
         $sql = "INSERT INTO msgs(
-				title, 
+				title,
 				description)
 				VALUES('$title', '$description')";
         $this->_db->exec($sql) or die($this->_db->lastErrorMsg());
 
-    }
-
-    //Результатом getNews должен быть возврат массива, поэтому создаем метод "перегоняющий ДБ в массив"
-    protected function db2Arr($data)
-    {
-        //создаем промежуточный пустой массив, т.к. результатом может быть пустой массив
-        $arr = array();
-        //если не пустой:
-        while ($row = $data->fetchArray(SQLITE3_ASSOC))
-            $arr[] = $row;
-        return $arr;
     }
 
     function getNews()
@@ -71,25 +85,14 @@ class NewsDB implements INewsDB
         return $this->db2Arr($res);
     }
 
-    function createCommentsTable()
+    protected function db2Arr($data)
     {
-        $sql = "CREATE TABLE IF NOT EXISTS comments(
-				id INTEGER,
-				news_id INTEGER,
-				author TEXT,
-				text TEXT)";
-        $this->_db->exec($sql) or die($this->_db->lastErrorMsg());
-    }
-
-    function getNewsComments($news_id)
-    {
-        $sql = "SELECT 
-                id, author, text
-                FROM comments
-                WHERE news_id = " . $news_id . "
-                ORDER BY id DESC";
-        $res = $this->_db->query($sql) or die($this->_db->lastErrorMsg());
-        return $this->db2Arr($res);
+        //создаем промежуточный пустой массив, т.к. результатом может быть пустой массив
+        $arr = array();
+        //если не пустой:
+        while ($row = $data->fetchArray(SQLITE3_ASSOC))
+            $arr[] = $row;
+        return $arr;
     }
 
     function addNewsComment($news_id, $author, $text)
@@ -99,6 +102,16 @@ class NewsDB implements INewsDB
                 VALUES($news_id, '$author', '$text')";
         $this->_db->exec($sql) or die($this->_db->lastErrorMsg());
     }
-}
 
-?>
+    function getNewsComment($news_id)
+    {
+        $sql = "SELECT
+                id, author, text
+                FROM comments
+                WHERE news_id = " . $news_id . "
+                ORDER BY id DESC";
+        $res = $this->_db->query($sql) or die($this->_db->lastErrorMsg());
+        return $this->db2Arr($res);
+    }
+
+}

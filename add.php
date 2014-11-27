@@ -1,4 +1,8 @@
 <?php
+/**
+ *
+ */
+
 header('Content-Type: text/html; charset=utf-8');
 require 'NewsDB.class.php';
 $news = new NewsDB;
@@ -22,18 +26,13 @@ if ($errMsg)
     echo "<h3>$errMsg<h3/>";
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-
     Заголовок новости:<br/>
     <input type="text" name="title"/><br/>
-
     <br/>
     Текст новости:<br/>
     <textarea name="description" cols="50" rows="5" placeholder="Введите текст новости..."></textarea><br/>
-
     <br/>
     <input type="submit" value="Добавить!"/>
-
 </form>
-
 </body>
 </html>

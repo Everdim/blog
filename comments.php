@@ -1,6 +1,10 @@
 <?php
+/**
+ * Comments file
+ * Display the comments
+ */
 echo '<h2>Комментарии</h2>';
-$result = $news->getNewsComments($id);
+$result = $news->getNewsComment($id);
 if (count($result)) {
     echo '<ul>';
     foreach ($result as $comment) {
@@ -11,4 +15,3 @@ if (count($result)) {
     echo 'Комментариев нет';
 }
 include 'comment.php';
-?>

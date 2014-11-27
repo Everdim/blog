@@ -1,4 +1,14 @@
 <?php
+/**
+ * Index file
+ *
+ * @version 1.0
+ * @author  Dmitry Balandin <dmitry.balandin.1990@gmail.com>
+ */
+
+/**
+ * Application entry point
+ */
 header('Content-Type: text/html; charset=utf-8');
 require 'NewsDB.class.php';
 $news = new NewsDB;
