@@ -3,7 +3,7 @@
  * Interface INewsDB with main methods
  *
  * @version 1.0
- * @author Dmitry Balandin <dmitry.balandin.1990@gmail.com>
+ * @author  Dmitry Balandin <dmitry.balandin.1990@gmail.com>
  */
 
 /**
@@ -14,26 +14,26 @@ interface INewsDB
     /**
      * Add new post in news feed
      *
-     * @param string $title - заголовок новости
+     * @param string $title       - заголовок новости
      * @param string $description - текст новости
      *
-     * @return boolean - результат успех/ошибка
+     * @return boolean - result success/error
      */
     function saveNews($title, $description);
 
     /**
      * Get posts from news feed
      *
-     * @return array - результат выборки приходит в виде массива
+     * @return array - result comes as array
      */
     function getNews();
 
     /**
      * Add comment to news feed
      *
-     * @param $news_id - id новости
-     * @param $author - имя автора комментария
-     * @param $text - текст комментария
+     * @param $news_id - news id
+     * @param $author  - comment author name
+     * @param $text    - comment text
      *
      * @return mixed
      */
@@ -42,7 +42,7 @@ interface INewsDB
     /**
      * Get comment from news feed
      *
-     * @param $news_id
+     * @param $news_id - news id
      *
      * @return mixed
      */

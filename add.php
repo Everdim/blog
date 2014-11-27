@@ -1,14 +1,17 @@
 <?php
 /**
+ * Add news file
  *
+ * @version 1.0
+ * @author  Dmitry Balandin <dmitry.balandin.1990@gmail.com>
  */
-
 header('Content-Type: text/html; charset=utf-8');
 require 'NewsDB.class.php';
-$news = new NewsDB;
+$news   = new NewsDB;
 $errMsg = ' ';
-if ($_SERVER['REQUEST_METHOD'] == 'POST')
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     include 'save_news.php';
+}
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -22,8 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
 <h1>Новости</h1>
 <?php
-if ($errMsg)
+if ($errMsg) {
     echo "<h3>$errMsg<h3/>";
+}
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
     Заголовок новости:<br/>
